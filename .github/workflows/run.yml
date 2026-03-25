@@ -1,0 +1,30 @@
+name: Odds AI Agent
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # 30 min တစ်ခါ run
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run agent
+        run: python agent.py
+
+      - name: Save data
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@example.com"
+          git add odds.json
+          git commit -m "update odds" || echo "no changes"
+          git push
