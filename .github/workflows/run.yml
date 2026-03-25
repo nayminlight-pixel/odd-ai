@@ -1,25 +1,22 @@
 name: Odds AI Agent
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *'   # 30 min တစ်ခါ run
+    - cron: '*/30 * * * *'
 
 jobs:
   run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
 
-      - name: Install requests
-        run: pip install requests
+      - run: pip install requests
 
-      - name: Run agent
-        run: python agent.py
+      - run: python agent.py
 
       - name: Save data
         run: |
